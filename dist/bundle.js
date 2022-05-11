@@ -1,48 +1,45 @@
-/******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./lib/bundle.js":
-/*!***********************!*\
-  !*** ./lib/bundle.js ***!
-  \***********************/
-/***/ (() => {
-
 /******/ var __webpack_modules__ = ([
 /* 0 */,
 /* 1 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_109__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require_authing__) => {
 
-__nested_webpack_require_109__.r(__webpack_exports__);
-/* harmony export */ __nested_webpack_require_109__.d(__webpack_exports__, {
+__webpack_require_authing__.r(__webpack_exports__);
+/* harmony export */ __webpack_require_authing__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _global_api__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_109__(2);
+/* harmony import */ var _instance__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require_authing__(2);
+/* harmony import */ var _global_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require_authing__(3);
 
 
-const AuthenticAuthingMove = factory()
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AuthenticAuthingMove);
+(0,_global_api__WEBPACK_IMPORTED_MODULE_1__.initGlobalApi)(_instance__WEBPACK_IMPORTED_MODULE_0__["default"])
 
-function factory () {
-  function AuthingMove () {}
+_instance__WEBPACK_IMPORTED_MODULE_0__["default"].version = "1.0.0"
 
-  (0,_global_api__WEBPACK_IMPORTED_MODULE_0__.initGlobalApi)(AuthingMove)
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_instance__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
-  return AuthingMove
-}
-
-__nested_webpack_require_109__.g.AuthenticAuthingMove = AuthenticAuthingMove
+__webpack_require_authing__.g.AuthingMove = _instance__WEBPACK_IMPORTED_MODULE_0__["default"]
 
 
 /***/ }),
 /* 2 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_854__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require_authing__) => {
 
-__nested_webpack_require_854__.r(__webpack_exports__);
-/* harmony export */ __nested_webpack_require_854__.d(__webpack_exports__, {
+__webpack_require_authing__.r(__webpack_exports__);
+/* harmony export */ __webpack_require_authing__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ AuthingMove)
+/* harmony export */ });
+function AuthingMove () {}
+
+/***/ }),
+/* 3 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require_authing__) => {
+
+__webpack_require_authing__.r(__webpack_exports__);
+/* harmony export */ __webpack_require_authing__.d(__webpack_exports__, {
 /* harmony export */   "initGlobalApi": () => (/* binding */ initGlobalApi)
 /* harmony export */ });
-/* harmony import */ var _use__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_854__(3);
+/* harmony import */ var _use__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require_authing__(4);
 
 
 function initGlobalApi (AuthingMove) {
@@ -51,11 +48,11 @@ function initGlobalApi (AuthingMove) {
 
 
 /***/ }),
-/* 3 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_1355__) => {
+/* 4 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require_authing__) => {
 
-__nested_webpack_require_1355__.r(__webpack_exports__);
-/* harmony export */ __nested_webpack_require_1355__.d(__webpack_exports__, {
+__webpack_require_authing__.r(__webpack_exports__);
+/* harmony export */ __webpack_require_authing__.d(__webpack_exports__, {
 /* harmony export */   "initUse": () => (/* binding */ initUse)
 /* harmony export */ });
 function initUse (AuthingMove) {
@@ -84,15 +81,15 @@ function initUse (AuthingMove) {
 
 
 /***/ }),
-/* 4 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_2201__) => {
+/* 5 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require_authing__) => {
 
-__nested_webpack_require_2201__.r(__webpack_exports__);
-/* harmony export */ __nested_webpack_require_2201__.d(__webpack_exports__, {
+__webpack_require_authing__.r(__webpack_exports__);
+/* harmony export */ __webpack_require_authing__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ install)
 /* harmony export */ });
-/* harmony import */ var _transform__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_2201__(5);
-/* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_2201__(6);
+/* harmony import */ var _transform__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require_authing__(6);
+/* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require_authing__(7);
 
 
 
@@ -101,7 +98,7 @@ function install (AuthingMove, options = {}) {
     custom = {} // 自定义转换规则
   } = options
   const from = "wx" || 0
-  const to = "wx" || 0
+  const to = "baidu" || 0
 
   const transformedApi = (0,_transform__WEBPACK_IMPORTED_MODULE_0__["default"])({
     from,
@@ -125,15 +122,15 @@ function install (AuthingMove, options = {}) {
 
 
 /***/ }),
-/* 5 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_3354__) => {
+/* 6 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require_authing__) => {
 
-__nested_webpack_require_3354__.r(__webpack_exports__);
-/* harmony export */ __nested_webpack_require_3354__.d(__webpack_exports__, {
+__webpack_require_authing__.r(__webpack_exports__);
+/* harmony export */ __webpack_require_authing__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ transformApi)
 /* harmony export */ });
-/* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_3354__(6);
-/* harmony import */ var _platforms_wx_ali__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_3354__(7);
+/* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require_authing__(7);
+/* harmony import */ var _platforms_wx_ali__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require_authing__(8);
 
 
 
@@ -201,11 +198,11 @@ function transformApi (options) {
 
 
 /***/ }),
-/* 6 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_5482__) => {
+/* 7 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require_authing__) => {
 
-__nested_webpack_require_5482__.r(__webpack_exports__);
-/* harmony export */ __nested_webpack_require_5482__.d(__webpack_exports__, {
+__webpack_require_authing__.r(__webpack_exports__);
+/* harmony export */ __webpack_require_authing__.d(__webpack_exports__, {
 /* harmony export */   "adaptOptions": () => (/* binding */ adaptOptions),
 /* harmony export */   "error": () => (/* binding */ error),
 /* harmony export */   "generateFromMap": () => (/* binding */ generateFromMap),
@@ -216,11 +213,11 @@ __nested_webpack_require_5482__.r(__webpack_exports__);
 /* harmony export */   "warn": () => (/* binding */ warn)
 /* harmony export */ });
 function getEnvContext () {
-  switch ("wx") {
+  switch ("baidu") {
     case 'wx':
       return wx
     case 'ali':
-      return ali
+      return my
     case 'baidu':
       return swan
     case 'qq':
@@ -287,14 +284,14 @@ function handleSuccess (originalOptions, wrappedSuccess = noop, context) {
 
 
 /***/ }),
-/* 7 */
-/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_7786__) => {
+/* 8 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require_authing__) => {
 
-__nested_webpack_require_7786__.r(__webpack_exports__);
-/* harmony export */ __nested_webpack_require_7786__.d(__webpack_exports__, {
+__webpack_require_authing__.r(__webpack_exports__);
+/* harmony export */ __webpack_require_authing__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ getWxToAliApi)
 /* harmony export */ });
-/* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_7786__(6);
+/* harmony import */ var _shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require_authing__(7);
 
 
 const envContext = (0,_shared__WEBPACK_IMPORTED_MODULE_0__.getEnvContext)()
@@ -401,7 +398,7 @@ function getWxToAliApi () {
 /******/ var __webpack_module_cache__ = {};
 /******/ 
 /******/ // The require function
-/******/ function __nested_webpack_require_10646__(moduleId) {
+/******/ function __webpack_require_authing__(moduleId) {
 /******/ 	// Check if module is in cache
 /******/ 	var cachedModule = __webpack_module_cache__[moduleId];
 /******/ 	if (cachedModule !== undefined) {
@@ -415,7 +412,7 @@ function getWxToAliApi () {
 /******/ 	};
 /******/ 
 /******/ 	// Execute the module function
-/******/ 	__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_10646__);
+/******/ 	__webpack_modules__[moduleId](module, module.exports, __webpack_require_authing__);
 /******/ 
 /******/ 	// Return the exports of the module
 /******/ 	return module.exports;
@@ -425,9 +422,9 @@ function getWxToAliApi () {
 /******/ /* webpack/runtime/define property getters */
 /******/ (() => {
 /******/ 	// define getter functions for harmony exports
-/******/ 	__nested_webpack_require_10646__.d = (exports, definition) => {
+/******/ 	__webpack_require_authing__.d = (exports, definition) => {
 /******/ 		for(var key in definition) {
-/******/ 			if(__nested_webpack_require_10646__.o(definition, key) && !__nested_webpack_require_10646__.o(exports, key)) {
+/******/ 			if(__webpack_require_authing__.o(definition, key) && !__webpack_require_authing__.o(exports, key)) {
 /******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
 /******/ 		}
@@ -436,7 +433,7 @@ function getWxToAliApi () {
 /******/ 
 /******/ /* webpack/runtime/global */
 /******/ (() => {
-/******/ 	__nested_webpack_require_10646__.g = (function() {
+/******/ 	__webpack_require_authing__.g = (function() {
 /******/ 		if (typeof globalThis === 'object') return globalThis;
 /******/ 		try {
 /******/ 			return this || new Function('return this')();
@@ -448,13 +445,13 @@ function getWxToAliApi () {
 /******/ 
 /******/ /* webpack/runtime/hasOwnProperty shorthand */
 /******/ (() => {
-/******/ 	__nested_webpack_require_10646__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	__webpack_require_authing__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ })();
 /******/ 
 /******/ /* webpack/runtime/make namespace object */
 /******/ (() => {
 /******/ 	// define __esModule on exports
-/******/ 	__nested_webpack_require_10646__.r = (exports) => {
+/******/ 	__webpack_require_authing__.r = (exports) => {
 /******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 		}
@@ -466,110 +463,20 @@ function getWxToAliApi () {
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-__nested_webpack_require_10646__.r(__webpack_exports__);
-/* harmony import */ var _AuthingMove_core__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_10646__(1);
-/* harmony import */ var _AuthingMove_api_proxy__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_10646__(4);
-// import { funcA } from './a'
-// import { funcB } from './b'
+__webpack_require_authing__.r(__webpack_exports__);
+/* harmony export */ __webpack_require_authing__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _AuthingMove_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require_authing__(1);
+/* harmony import */ var _AuthingMove_api_proxy__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require_authing__(5);
 
 
 
 _AuthingMove_core__WEBPACK_IMPORTED_MODULE_0__["default"].use(_AuthingMove_api_proxy__WEBPACK_IMPORTED_MODULE_1__["default"])
 
-// export const str = funcA() + '--------' + funcB()
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_AuthingMove_core__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 })();
 
-
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
-"use strict";
-/*!**************************!*\
-  !*** ./example/index.js ***!
-  \**************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _lib_bundle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../lib/bundle */ "./lib/bundle.js");
-/* harmony import */ var _lib_bundle__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_lib_bundle__WEBPACK_IMPORTED_MODULE_0__);
-
-
-console.log('str: ', _lib_bundle__WEBPACK_IMPORTED_MODULE_0__.str)
-
-})();
-
-var __webpack_export_target__ = exports;
-for(var i in __webpack_exports__) __webpack_export_target__[i] = __webpack_exports__[i];
-if(__webpack_exports__.__esModule) Object.defineProperty(__webpack_export_target__, "__esModule", { value: true });
-/******/ })()
-;
+var __webpack_exports__default = __webpack_exports__["default"];
+export { __webpack_exports__default as default };

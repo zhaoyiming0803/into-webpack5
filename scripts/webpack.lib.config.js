@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const RenameRequireWebpackPlugin = require('../AuthingMove/webpack-plugin/RenameRequireWebpackPlugin')
 
 function resolve (dir, file = '') {
   return path.resolve(__dirname, '../', dir, file)
@@ -7,11 +8,10 @@ function resolve (dir, file = '') {
 
 module.exports = {
   mode: 'none',
-  devtool: 'hidden-source-map',
   entry: resolve('src', 'index.js'),
   output: {
     filename: "bundle.js",
-    path: resolve('lib'),
+    path: resolve('dist'),
     library: {
       // do not specify a `name` here
       type: 'module'
@@ -23,8 +23,9 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       __authing_move_src_mode__: JSON.stringify('wx'),
-      __authing_move_mode__: JSON.stringify('wx'),
+      __authing_move_mode__: JSON.stringify('baidu'),
       __version__: JSON.stringify('1.0.0')
-    })
+    }),
+    new RenameRequireWebpackPlugin()
   ]
 }

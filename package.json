@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:lib": "webpack --config scripts/webpack.lib.config.js",
-    "build:example": "webpack --config scripts/webpack.example.config.js"
+    "build:lib": "webpack --config scripts/webpack.lib.config.js"
   },
   "author": "",
   "license": "ISC",
