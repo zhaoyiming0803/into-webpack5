@@ -1,4 +1,4 @@
-import { error, getEnvContext, generateFromMap, makeMap } from '../shared'
+import { error, getEnvContext, generateFromMap } from '../shared'
 import getWxToAliApi from './platforms/wx-ali'
 
 const fromMap = generateFromMap()
