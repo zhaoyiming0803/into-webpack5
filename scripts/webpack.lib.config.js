@@ -1,6 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
-const RenameRequireWebpackPlugin = require('../AuthingMove/webpack-plugin/RenameRequireWebpackPlugin')
+const AuthingMoveWebpackPlugin = require('../AuthingMove/webpack-plugin/AuthingMoveWebpackPlugin')
 
 function resolve (dir, file = '') {
   return path.resolve(__dirname, '../', dir, file)
@@ -23,9 +23,9 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       __authing_move_src_mode__: JSON.stringify('wx'),
-      __authing_move_mode__: JSON.stringify('baidu'),
+      __authing_move_mode__: JSON.stringify('ali'),
       __version__: JSON.stringify('1.0.0')
     }),
-    new RenameRequireWebpackPlugin()
+    new AuthingMoveWebpackPlugin()
   ]
 }

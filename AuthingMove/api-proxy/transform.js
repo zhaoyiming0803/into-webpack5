@@ -4,7 +4,8 @@ import getWxToAliApi from './platforms/wx-ali'
 const fromMap = generateFromMap()
 
 function joinName (from = '', to = '') {
-  return `${fromMap[from]}_${to}`
+  const _from = `__authing_move_src_mode_${from}__`
+  return `${fromMap[_from]}_${to}`
 }
 
 export default function transformApi (options) {

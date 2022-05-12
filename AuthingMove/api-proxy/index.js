@@ -5,7 +5,7 @@ export default function install (AuthingMove, options = {}) {
   const {
     custom = {} // 自定义转换规则
   } = options
-  const from = __authing_move_src_mode__ || '__authing_move_src_mode_wx__'
+  const from = __authing_move_src_mode__ || 'wx'
   const to = __authing_move_mode__ || 'wx'
 
   const transformedApi = transformApi({

@@ -20,7 +20,7 @@ export function getEnvContext () {
 export function generateFromMap () {
   const platforms = ['wx', 'ali', 'baidu', 'qq', 'tt', 'jd', 'qa']
   return platforms.reduce((map, platform) => {
-    map[`__authing_move_mode_${platform}__`] = platform
+    map[`__authing_move_src_mode_${platform}__`] = platform
     return map
   }, {})
 }
