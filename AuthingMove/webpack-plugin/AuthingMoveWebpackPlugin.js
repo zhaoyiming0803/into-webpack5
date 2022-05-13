@@ -4,13 +4,25 @@ const NullFactory = require('webpack/lib/NullFactory')
 const path = require('path')
 
 class AuthingMoveWebpackPlugin {
+  constructor (options) {
+    options.srcMode = options.srcMode || 'wx'
+    options.mode = options.mode || 'wx'
+    this.options = options
+  }
+
   apply (compiler) {
     compiler.hooks.thisCompilation.tap('AuthingMoveWebpackPlugin', (compilation, { normalModuleFactory }) => {
+      if (!compilation.__AuthingMove) {
+        compilation.__AuthingMove = {
+          options: this.options
+        }
+      }
       replaceGlobalWx(compilation, normalModuleFactory)
     })
 
     compiler.hooks.emit.tap('AuthingMoveWebpackPlugin', compilation => {
-      replaceRequire(compilation)
+      replaceWebpackVariables(compilation)
+      injectFrameworkDependency(compilation)
     })
   }
 }
@@ -39,9 +51,18 @@ function replaceGlobalWx (compilation, normalModuleFactory) {
         return
       }
 
+      // Only wechat as base is supported, so folowing codes is fixed
       const type = _expression.name
       const name = type === 'wx' ? 'AuthingMove' : ''
-      const replaceContent = type === 'wx' ? 'AuthingMove': ''
+
+      // Original platform be wrapped into 'AuthingMove';
+      // uni-app have their own global variables, and need not to 'import';
+      // taro need to 'import' by inject.
+      const replaceContent = type === 'wx' 
+        ? compilation.__AuthingMove.options.mode === 'uni'
+          ? compilation.__AuthingMove.options.mode
+          : 'AuthingMove'
+        : ''
 
       const dep = new ReplaceDependency(replaceContent, _expression.range)
       parser.state.current.addPresentationalDependency(dep)
@@ -62,15 +83,35 @@ function replaceGlobalWx (compilation, normalModuleFactory) {
   })
 }
 
-function replaceRequire (compilation) {
+function replaceWebpackVariables (compilation) {
   Object.keys(compilation.assets).forEach(key => {
     const content = compilation.assets[key]
       .source()
       .replace(/__webpack_require__/g, '__webpack_require_authing__')
+      .replace(/__webpack_exports__/g, '__webpack_exports_authing__')
 
     compilation.assets[key] = {
       size: () => content.length,
       source: () => content
+    }
+  })
+}
+
+function injectFrameworkDependency (compilation) {
+  const frameworkMap = {
+    'Taro': 'import Taro from "@tarojs/taro";'
+  }
+
+  Object.keys(compilation.assets).forEach(key => {
+    const content = compilation.assets[key].source()
+    const importStatement = frameworkMap[compilation.__AuthingMove.options.mode]
+  
+    if (importStatement) {
+      const newContent = importStatement + '\n\n' + content
+      compilation.assets[key] = {
+        size: () => newContent.length,
+        source: () => newContent
+      }
     }
   })
 }

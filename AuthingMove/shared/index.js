@@ -4,7 +4,7 @@ export function getEnvContext () {
       return wx
     case 'ali':
       return my
-    case 'baidu':
+    case 'swan':
       return swan
     case 'qq':
       return qq
@@ -14,6 +14,10 @@ export function getEnvContext () {
       return jd
     case 'qa':
       return qa
+    case 'Taro':
+      return Taro
+    case 'uni':
+      return uni
   }
 }
 
