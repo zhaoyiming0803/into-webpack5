@@ -22,9 +22,9 @@ module.exports = {
       type: 'commonjs'
     }
   },
-  externals: {
-    '@system.storage': '@system.storage'
-  },
+  // externals: {
+  //   '@system.storage': '@system.storage'
+  // },
   plugins: [
     new webpack.DefinePlugin({
       __authing_move_src_mode__: JSON.stringify(__authing_move_src_mode__),

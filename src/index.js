@@ -1,14 +1,17 @@
 import AuthingMove from '../AuthingMove/core'
 import apiProxy from '../AuthingMove/api-proxy'
 
+import { funcA, callStorage } from './a'
+
 AuthingMove.use(apiProxy)
 
-wx.setStorage('world', 'hello')
+AuthingMove.funcA = funcA
 
-// wx.showToast({
-//   title: 'Toast',
-//   icon: 'success',
-//   duration: 3000
-// })
+wx.setStorage({
+  key: 'hello321',
+  data: '123hello'
+})
+
+callStorage()
 
 export default AuthingMove

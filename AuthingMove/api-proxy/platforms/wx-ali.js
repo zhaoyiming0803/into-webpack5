@@ -1,4 +1,4 @@
-import { getEnvContext, error, adaptOptions, handleSuccess } from '../../shared'
+import { getEnvContext, error, adaptOptions, handleSuccess } from '../utils'
 
 const envContext = getEnvContext()
 

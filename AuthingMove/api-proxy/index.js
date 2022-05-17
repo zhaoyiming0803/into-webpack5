@@ -1,5 +1,5 @@
 import transformApi from './transform'
-import { error } from '../shared'
+import { error } from './utils'
 
 export default function install (AuthingMove, options = {}) {
   const {

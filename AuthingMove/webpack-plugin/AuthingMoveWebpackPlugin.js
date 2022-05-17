@@ -2,8 +2,9 @@ const ReplaceDependency = require('./dependencies/ReplaceDependency')
 const CommonJsVariableDependency = require('./dependencies/CommonJsVariableDependency')
 const NullFactory = require('webpack/lib/NullFactory')
 const path = require('path')
+const AddModePlugin = require('./resolvers/AddModePlugin')
 
-class AuthingMoveWebpackPlugin {
+module.exports = class AuthingMoveWebpackPlugin {
   constructor (options) {
     options.srcMode = options.srcMode || 'wx'
     options.mode = options.mode || 'wx'
@@ -11,26 +12,53 @@ class AuthingMoveWebpackPlugin {
   }
 
   apply (compiler) {
-    compiler.hooks.thisCompilation.tap('AuthingMoveWebpackPlugin', (compilation, { normalModuleFactory }) => {
-      if (!compilation.__AuthingMove) {
-        compilation.__AuthingMove = {
-          options: this.options
-        }
-      }
-      
-      if (!['wx', 'Mpx'].includes(this.options.mode)) {
-        replaceGlobalWx(compilation, normalModuleFactory)
-      }
-    })
-
-    compiler.hooks.emit.tap('AuthingMoveWebpackPlugin', compilation => {
-      replaceWebpackVariables(compilation)
-      injectFrameworkDependency(compilation)
-    })
+    enhanceResolver.call(this, compiler)
+    configExternal.call(this, compiler)
+    tapThisCompilation.call(this, compiler)
+    tapEmit.call(this, compiler)
   }
 }
 
-module.exports = AuthingMoveWebpackPlugin
+function tapThisCompilation (compiler) {
+  compiler.hooks.thisCompilation.tap('AuthingMoveWebpackPlugin', (compilation, { normalModuleFactory }) => {
+    if (!compilation.__AuthingMove) {
+      compilation.__AuthingMove = {
+        options: this.options
+      }
+    }
+    
+    if (!['wx', 'Mpx'].includes(this.options.mode)) {
+      replaceGlobalWx(compilation, normalModuleFactory)
+    }
+  })
+}
+
+function tapEmit (compiler) {
+  compiler.hooks.emit.tap('AuthingMoveWebpackPlugin', compilation => {
+    replaceWebpackVariables(compilation)
+    injectFrameworkDependency(compilation)
+  })
+}
+
+function enhanceResolver (compiler) {
+  const addModePlugin = new AddModePlugin('before-file', this.options.mode, 'file')
+  if (Array.isArray(compiler.options.resolve.plugins)) {
+    compiler.options.resolve.plugins.push(addModePlugin)
+  } else {
+    compiler.options.resolve.plugins = [addModePlugin]
+  }
+}
+
+function configExternal (compiler) {
+  compiler.options.externals = [
+    function ({ request }, callback) {
+      if (/^@system\./img.test(request)) {
+        return callback(null, 'commonjs ' + request)
+      }
+      callback()
+    }
+  ]
+}
 
 function replaceGlobalWx (compilation, normalModuleFactory) {
   compilation.dependencyFactories.set(ReplaceDependency, new NullFactory())
@@ -55,20 +83,30 @@ function replaceGlobalWx (compilation, normalModuleFactory) {
       }
 
       // Only wechat as base is supported, so folowing codes is fixed
-      const type = _expression.name
-      const name = type === 'wx' ? 'AuthingMove' : ''
+      const name = 'AuthingMove'
 
       // Original platform be wrapped into 'AuthingMove';
       // uni-app have their own global variables, and need not to 'import';
       // taro need to 'import' by inject.
-      const replaceContent = type === 'wx' 
-        ? compilation.__AuthingMove.options.mode === 'uni'
-          ? 'uni'
-          : 'AuthingMove'
-        : ''
+      const modeMap = {
+        'wx': 'wx',
+        'Mpx': 'wx',
+        'ali': 'my',
+        'baidu': 'swan',
+        'qq': 'qq',
+        'tt': 'tt',
+        'jd': 'jd',
+        'qa_webview': 'qa',
+        // 'qa_ux': {}, // only a comment
+        'Taro': 'Taro',
+        'uni': 'uni'
+      }
 
-      const dep = new ReplaceDependency(replaceContent, _expression.range)
-      parser.state.current.addPresentationalDependency(dep)
+      if (modeMap[compilation.__AuthingMove.options.mode]) {
+        const replaceContent = modeMap[compilation.__AuthingMove.options.mode]
+        const dep = new ReplaceDependency(replaceContent, _expression.range)
+        parser.state.current.addPresentationalDependency(dep)
+      }
 
       let needInject = true
 

@@ -7,7 +7,7 @@ export function getEnvContext () {
       return wx
     case 'ali':
       return my
-    case 'swan':
+    case 'baidu':
       return swan
     case 'qq':
       return qq

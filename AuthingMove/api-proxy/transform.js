@@ -1,6 +1,5 @@
-import { error, getEnvContext, generateFromMap } from '../shared'
-import getWxToAliApi from './platforms/wx-ali'
-import getWxToQaApi from './platforms/wx-qa_webview'
+import { error, getEnvContext, generateFromMap } from './utils'
+import * as transformedApi from './apis'
 
 const fromMap = generateFromMap()
 
@@ -11,14 +10,7 @@ function joinName (from = '', to = '') {
 
 export default function transformApi (options) {
   const envContext = getEnvContext()
-  const { from, to } = options
-  const fromTo = joinName(from, to)
-  const platformMap = {
-    'wx_ali': getWxToAliApi(),
-    'wx_qa_webview': getWxToQaApi()
-  }
   const needProxy = Object.create(null)
-  const transformedApi = platformMap[fromTo] || {}
 
   Object.keys(envContext).concat(Object.keys(transformedApi)).forEach(key => {
     needProxy[key] = envContext[key] || transformedApi[key]
