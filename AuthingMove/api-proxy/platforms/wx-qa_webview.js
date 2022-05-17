@@ -1,4 +1,6 @@
-import { error } from '../../shared'
+import { error, getEnvContext } from '../../shared'
+
+const envContext = getEnvContext()
 
 export default function getWxToQaApi () {
   return {
@@ -6,10 +8,9 @@ export default function getWxToQaApi () {
      * 数据缓存
      */
     setStorage (key, data) {
-      const storage = require('@system.storage')
-      storage.set({
+      envContext.setStorage({
         key,
-        value: data
+        data
       })
     },
     setStorageSync (key, data) {

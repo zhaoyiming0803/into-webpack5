@@ -15,7 +15,9 @@ export function getEnvContext () {
       return tt
     case 'jd':
       return jd
-    case 'qa':
+    case 'qa_webview':
+      return qa
+    case 'qa_ux':
       return noopEnv
     case 'Taro':
       return Taro
@@ -25,7 +27,7 @@ export function getEnvContext () {
 }
 
 export function generateFromMap () {
-  const platforms = ['wx', 'ali', 'baidu', 'qq', 'tt', 'jd', 'qa']
+  const platforms = ['wx', 'ali', 'baidu', 'qq', 'tt', 'jd', 'qa_webview', 'qa_ux']
   return platforms.reduce((map, platform) => {
     map[`__authing_move_src_mode_${platform}__`] = platform
     return map

@@ -63,7 +63,7 @@ function replaceGlobalWx (compilation, normalModuleFactory) {
       // taro need to 'import' by inject.
       const replaceContent = type === 'wx' 
         ? compilation.__AuthingMove.options.mode === 'uni'
-          ? compilation.__AuthingMove.options.mode
+          ? 'uni'
           : 'AuthingMove'
         : ''
 

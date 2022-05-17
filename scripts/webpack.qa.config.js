@@ -7,7 +7,7 @@ function resolve (dir, file = '') {
 }
 
 const __authing_move_src_mode__ = 'wx' // fixed value, do not allow to change
-const __authing_move_mode__ = 'qa'
+const __authing_move_mode__ = 'qa_webview'
 
 const version = require('../package.json').version
 

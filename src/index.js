@@ -3,7 +3,7 @@ import apiProxy from '../AuthingMove/api-proxy'
 
 AuthingMove.use(apiProxy)
 
-wx.setStorage('hello abcdefgh', 'abcdefgh')
+wx.setStorage('world', 'hello')
 
 // wx.showToast({
 //   title: 'Toast',
