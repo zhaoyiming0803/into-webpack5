@@ -8,6 +8,9 @@ export default function install (AuthingMove, options = {}) {
   const from = __authing_move_src_mode__ || 'wx'
   const to = __authing_move_mode__ || 'wx'
 
+  if (['uni'].includes(to)) {
+    return
+  }
 
   const transformedApi = transformApi({
     from,

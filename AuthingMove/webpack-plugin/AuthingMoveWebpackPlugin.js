@@ -97,7 +97,7 @@ function replaceGlobalWx (compilation, normalModuleFactory) {
         'tt': 'tt',
         'jd': 'jd',
         'qa_webview': 'qa',
-        // 'qa_ux': {}, // only a comment
+        'qa_ux': 'AuthingMove',
         'Taro': 'Taro',
         'uni': 'uni'
       }

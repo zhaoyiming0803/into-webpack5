@@ -8,7 +8,7 @@ AuthingMove.use(apiProxy)
 AuthingMove.funcA = funcA
 
 wx.setStorage({
-  key: 'hello321',
+  key: 'hello11111111',
   data: '123hello'
 })
 

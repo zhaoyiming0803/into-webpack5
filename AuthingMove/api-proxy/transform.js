@@ -42,9 +42,9 @@ export default function transformApi (options) {
       if (options.custom[fromTo] && options.custom[fromTo][api]) {
         return options.custom[fromTo][api].apply(this, args)
       }
-
-      if (platformMap[fromTo] && platformMap[fromTo][api]) {
-        return platformMap[fromTo][api].apply(this, args)
+      
+      if (transformedApi[api]) {
+        return transformedApi[api].apply(this, args)
       }
 
       if (envContext[api]) {
