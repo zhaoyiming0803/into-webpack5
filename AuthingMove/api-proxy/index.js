@@ -2,15 +2,12 @@ import transformApi from './transform'
 import { error } from '../shared'
 
 export default function install (AuthingMove, options = {}) {
-  if (to === 'uni') {
-    return
-  }
-
   const {
     custom = {} // custom transform rules
   } = options
   const from = __authing_move_src_mode__ || 'wx'
   const to = __authing_move_mode__ || 'wx'
+
 
   const transformedApi = transformApi({
     from,

@@ -3,12 +3,12 @@ import apiProxy from '../AuthingMove/api-proxy'
 
 AuthingMove.use(apiProxy)
 
-wx.setStorageSync('abcdefg', 'abcdefg')
+wx.setStorage('hello abcdefgh', 'abcdefgh')
 
-wx.showToast({
-  title: 'Toast',
-  icon: 'success',
-  duration: 3000
-})
+// wx.showToast({
+//   title: 'Toast',
+//   icon: 'success',
+//   duration: 3000
+// })
 
 export default AuthingMove

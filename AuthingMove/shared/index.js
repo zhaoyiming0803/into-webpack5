@@ -1,6 +1,9 @@
 export function getEnvContext () {
+  const noopEnv = {}
+
   switch (__authing_move_mode__) {
     case 'wx':
+    case 'Mpx':
       return wx
     case 'ali':
       return my
@@ -13,7 +16,7 @@ export function getEnvContext () {
     case 'jd':
       return jd
     case 'qa':
-      return qa
+      return noopEnv
     case 'Taro':
       return Taro
     case 'uni':

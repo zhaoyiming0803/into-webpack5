@@ -6,5 +6,3 @@ initGlobalApi(AuthingMove)
 AuthingMove.version = __version__
 
 export default AuthingMove
-
-global.AuthingMove = AuthingMove

@@ -17,7 +17,10 @@ class AuthingMoveWebpackPlugin {
           options: this.options
         }
       }
-      replaceGlobalWx(compilation, normalModuleFactory)
+      
+      if (!['wx', 'Mpx'].includes(this.options.mode)) {
+        replaceGlobalWx(compilation, normalModuleFactory)
+      }
     })
 
     compiler.hooks.emit.tap('AuthingMoveWebpackPlugin', compilation => {
@@ -36,7 +39,7 @@ function replaceGlobalWx (compilation, normalModuleFactory) {
   compilation.dependencyFactories.set(CommonJsVariableDependency, normalModuleFactory)
   compilation.dependencyTemplates.set(CommonJsVariableDependency, new CommonJsVariableDependency.Template())
 
-  normalModuleFactory.hooks.parser.for('javascript/auto').tap('AuthingMoveWebpackPlugin', (parser) => {
+  normalModuleFactory.hooks.parser.for('javascript/auto').tap('AuthingMoveWebpackPlugin', parser => {
     parser.hooks.expression.for('wx').tap('AuthingMoveWebpackPlugin', expression => {
       let _expression
       const module = parser.state.module
