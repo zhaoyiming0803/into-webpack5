@@ -1,10 +1,17 @@
-// import { funcA } from './a'
-// import { funcB } from './b'
+import AuthingMove from '../AuthingMove/core'
+import apiProxy from '../AuthingMove/api-proxy'
 
+import { funcA, callStorage } from './a'
 
-// export const str = funcA() + '--------' + funcB()
+AuthingMove.use(apiProxy)
 
+AuthingMove.funcA = funcA
 
-import { str } from '../dist/bundle1'
+wx.setStorage({
+  key: 'hello11111111',
+  data: '123hello'
+})
 
-console.log('str: ', str)
+callStorage()
+
+export default AuthingMove

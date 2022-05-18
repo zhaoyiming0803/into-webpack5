@@ -1,14 +1,17 @@
 {
   "name": "test-webpack5",
-  "version": "1.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack --config scripts/webpack.config.js",
+    "build:qa": "webpack --config scripts/webpack.qa.config.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "json5": "^2.2.1",
+    "loader-utils": "^2.0.2",
     "webpack": "^5.72.0",
     "webpack-cli": "^4.9.2"
   }

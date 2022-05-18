@@ -1,1 +1,0 @@
-var t={d:(e,o)=>{for(var r in o)t.o(o,r)&&!t.o(e,r)&&Object.defineProperty(e,r,{enumerable:!0,get:o[r]})},o:(t,e)=>Object.prototype.hasOwnProperty.call(t,e)},e={};t.d(e,{B:()=>o});const o="this is function A--------this is function B";var r=e.B;export{r as str};
