@@ -1,4 +1,4 @@
-export function setStorage (options) {
+export function setStorage (options = {}) {
   return my.setStorage(options)
 }
 

@@ -1,5 +1,6 @@
 import { error, getEnvContext, generateFromMap } from './utils'
 import * as transformedApi from './apis'
+import { supportedApis } from './config'
 
 const fromMap = generateFromMap()
 
@@ -12,7 +13,7 @@ export default function transformApi (options) {
   const envContext = getEnvContext()
   const needProxy = Object.create(null)
 
-  Object.keys(envContext).concat(Object.keys(transformedApi)).forEach(key => {
+  supportedApis.concat(Object.keys(transformedApi)).forEach(key => {
     needProxy[key] = envContext[key] || transformedApi[key]
   })
 
@@ -51,7 +52,7 @@ export default function transformApi (options) {
         return envContext[api].apply(this, args)
       }
 
-      error(`当前小程序环境不存在 ${api} 方法`)
+      error(`"${api}" method does not exist in the current context`)
     }
   })
 

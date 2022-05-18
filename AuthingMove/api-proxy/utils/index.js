@@ -1,33 +1,7 @@
-export function getEnvContext () {
-  const noopEnv = {}
-
-  switch (__authing_move_mode__) {
-    case 'wx':
-    case 'Mpx':
-      return wx
-    case 'ali':
-      return my
-    case 'baidu':
-      return swan
-    case 'qq':
-      return qq
-    case 'tt':
-      return tt
-    case 'jd':
-      return jd
-    case 'qa_webview':
-      return qa
-    case 'qa_ux':
-      return noopEnv
-    case 'Taro':
-      return Taro
-    case 'uni':
-      return uni
-  }
-}
+export * from './runtime-env'
 
 export function generateFromMap () {
-  const platforms = ['wx', 'ali', 'baidu', 'qq', 'tt', 'jd', 'qa_webview', 'qa_ux']
+  const platforms = ['wx', 'ali', 'baidu', 'qq', 'tt', 'jd', 'ks', 'qa_webview', 'qa_ux', 'Mpx', 'taro', 'uni']
   return platforms.reduce((map, platform) => {
     map[`__authing_move_src_mode_${platform}__`] = platform
     return map
@@ -42,11 +16,11 @@ export function makeMap (arr) {
 }
 
 export function warn (message) {
-  console.warn && console.warn(`[AuthingMove/api-proxy warn]:\n ${message}`)
+  console.warn && console.warn(`[AuthingMove/api-proxy warn in "${__authing_move_mode__}"]:\n ${message}`)
 }
 
 export function error (message) {
-  console.error && console.error(`[AuthingMove/api-proxy error]:\n ${message}`)
+  console.error && console.error(`[AuthingMove/api-proxy error in "${__authing_move_mode__}"]:\n ${message}`)
 }
 
 export function noop () {}

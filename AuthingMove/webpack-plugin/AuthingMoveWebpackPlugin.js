@@ -27,9 +27,7 @@ function tapThisCompilation (compiler) {
       }
     }
     
-    if (!['wx', 'Mpx'].includes(this.options.mode)) {
-      replaceGlobalWx(compilation, normalModuleFactory)
-    }
+    replaceGlobalWx(compilation, normalModuleFactory)
   })
 }
 
@@ -50,9 +48,11 @@ function enhanceResolver (compiler) {
 }
 
 function configExternal (compiler) {
+  const _this = this
+
   compiler.options.externals = [
     function ({ request }, callback) {
-      if (/^@system\./img.test(request)) {
+      if (/^(@system|@service)\./img.test(request) && _this.options.mode === 'qa_ux') {
         return callback(null, 'commonjs ' + request)
       }
       callback()
@@ -82,31 +82,19 @@ function replaceGlobalWx (compilation, normalModuleFactory) {
         return
       }
 
+      if (/runtime-env/.test(parser.state.module.resource)) {
+        return
+      }
+
       // Only wechat as base is supported, so folowing codes is fixed
       const name = 'AuthingMove'
 
       // Original platform be wrapped into 'AuthingMove';
       // uni-app have their own global variables, and need not to 'import';
       // taro need to 'import' by inject.
-      const modeMap = {
-        'wx': 'wx',
-        'Mpx': 'wx',
-        'ali': 'my',
-        'baidu': 'swan',
-        'qq': 'qq',
-        'tt': 'tt',
-        'jd': 'jd',
-        'qa_webview': 'qa',
-        'qa_ux': 'AuthingMove',
-        'Taro': 'Taro',
-        'uni': 'uni'
-      }
-
-      if (modeMap[compilation.__AuthingMove.options.mode]) {
-        const replaceContent = modeMap[compilation.__AuthingMove.options.mode]
-        const dep = new ReplaceDependency(replaceContent, _expression.range)
-        parser.state.current.addPresentationalDependency(dep)
-      }
+      const replaceContent = 'AuthingMove'
+      const dep = new ReplaceDependency(replaceContent, _expression.range)
+      parser.state.current.addPresentationalDependency(dep)
 
       let needInject = true
 
@@ -128,8 +116,8 @@ function replaceWebpackVariables (compilation) {
   Object.keys(compilation.assets).forEach(key => {
     const content = compilation.assets[key]
       .source()
-      .replace(/__webpack_require__/g, '__webpack_require_authing__')
-      .replace(/__webpack_exports__/g, '__webpack_exports_authing__')
+      .replace(/__webpack_require__/g, '__authing_webpack_require__')
+      .replace(/__webpack_exports__/g, '__authing_webpack_exports__')
 
     compilation.assets[key] = {
       size: () => content.length,

@@ -1,5 +1,6 @@
 import transformApi from './transform'
 import { error } from './utils'
+import { promisify } from './promisify'
 
 export default function install (AuthingMove, options = {}) {
   const {
@@ -8,24 +9,23 @@ export default function install (AuthingMove, options = {}) {
   const from = __authing_move_src_mode__ || 'wx'
   const to = __authing_move_mode__ || 'wx'
 
-  if (['uni'].includes(to)) {
-    return
-  }
-
-  const transformedApi = transformApi({
+  const transformedApis = transformApi({
     from,
     to,
     custom
   })
 
-  Object.keys(transformedApi).forEach(api => {
+  // reserve some expansion space
+  const apis = Object.assign({}, transformedApis, promisify(transformedApis))
+
+  Object.keys(apis).forEach(api => {
     try {
-      if (typeof transformedApi[api] !== 'function') {
-        AuthingMove[api] = transformedApi[api]
+      if (typeof apis[api] !== 'function') {
+        AuthingMove[api] = apis[api]
         return
       }
 
-      AuthingMove[api] = (...args) => transformedApi[api].apply(AuthingMove, args)
+      AuthingMove[api] = (...args) => apis[api].apply(AuthingMove, args)
     } catch (e) {
       error(`Call ${AuthingMove}.${api} error:` + JSON.stringify(e))
     }

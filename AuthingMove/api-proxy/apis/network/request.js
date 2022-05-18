@@ -1,3 +1,7 @@
+import { getEnvContext } from '../../utils'
+
+const envContext = getEnvContext()
+
 export function request (options = {}) {
-  return wx.request(options)
+  return envContext.request(options)
 }

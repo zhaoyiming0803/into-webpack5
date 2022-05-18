@@ -1,6 +1,6 @@
 import { error, adaptOptions, handleSuccess } from '../../utils'
 
-export function scanCode (options) {
+export function scanCode (options = {}) {
   const _options = adaptOptions(options, {
     onlyFromCamera: 'hideAlbum',
     scanType: 'type'
