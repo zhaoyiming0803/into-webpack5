@@ -7,7 +7,8 @@ const storageRes = wx.setStorage({
   key: 'setStorageKey',
   data: {
     a: 1,
-    b: 2
+    b: 2,
+    c: 3
   },
   success: res => {
     console.log('wx.setStorage success: ', res)
