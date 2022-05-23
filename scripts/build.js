@@ -27,25 +27,14 @@ try {
   console.log(chalk.red('\n\n Failed to delete dist directory, please operate manually \n\n'))
 }
 
+readyGo()
+
 async function readyGo () {
-  const maxConcurrency = require('os').cpus().length
-  const ret = []
-  const executing = []
-
-  for (const config of webpackConfigs) {
-    const p = Promise.resolve().then(() => build(config))
-    ret.push(p)
-
-    if (maxConcurrency <= webpackConfigs.length) {
-      const e = p.then(() => executing.splice(executing.indexOf(e), 1))
-      executing.push(e)
-
-      if (executing.length >= maxConcurrency) {
-        await Promise.race(executing)
-      }
-    }
-  }
-
+  const ret = webpackConfigs.reduce((ret, config) => {
+    return ret.concat(
+      Promise.resolve().then(() => build(config))
+    )
+  }, [])
   return Promise.all(ret)
 }
 
@@ -94,5 +83,3 @@ function callback (error, stats) {
     console.log(chalk.cyan('  Build complete.\n'))
   }
 }
-
-readyGo()
