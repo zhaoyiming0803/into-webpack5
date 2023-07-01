@@ -2,8 +2,7 @@
 // https://webpack.js.org/configuration/optimization/#optimizationusedexports
 
 function Button () {
-  const renderContent = 'Button' + [].slice.call(arguments).join('-')
-  console.log(renderContent)
+  return () => 'Button' + [].slice.call(arguments).join('-')
 }
 
 function ButtonProvider () {
