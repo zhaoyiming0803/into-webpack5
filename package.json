@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && webpack --config ./webpack.config.js",
-    "dev": "node ./scripts/build.js --watch",
-    "prod": "node ./scripts/build.js"
+    "build": "rm -rf dist && webpack --config ./webpack.config.js --watch"
   },
   "license": "ISC",
   "devDependencies": {
