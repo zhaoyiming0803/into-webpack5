@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config scripts/webpack.config.js",
+    "build": "rm -rf dist && webpack --config ./webpack.config.js",
     "dev": "node ./scripts/build.js --watch",
     "prod": "node ./scripts/build.js"
   },
@@ -12,6 +12,7 @@
   "devDependencies": {
     "chalk": "^2.3.2",
     "rimraf": "^2.6.2",
+    "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.72.0",
     "webpack-cli": "^4.9.2",
     "webpack-merge": "^5.8.0"
