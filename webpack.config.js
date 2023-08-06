@@ -9,7 +9,7 @@ function resolve (dir, file = '') {
 
 module.exports = {
   mode: 'none',
-  entry: resolve('src', 'index.js'),
+  entry: resolve('src', 'test.banner'),
   output: {
     filename: "bundle.js",
     path: resolve('dist'),
@@ -20,6 +20,21 @@ module.exports = {
   },
   experiments: {
     outputModule: true
+  },
+  resolveLoader: {
+    modules: ['node_modules', path.resolve(__dirname, 'loaders')]
+  },
+  module: {
+    rules: [{
+      test: /\.banner$/,
+      use: [{
+        loader: 'banner-loader',
+        options: {
+          author: 'sdf',
+          time: 'sdf'
+        }
+      }]
+    }]
   },
   optimization: {
     // mode 设为 production 后，以下选项自动启动
