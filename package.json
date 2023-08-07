@@ -8,6 +8,7 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "acorn-walk": "^8.2.0",
     "chalk": "^2.3.2",
     "loader-utils": "^3.2.1",
     "rimraf": "^2.6.2",

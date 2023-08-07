@@ -2,6 +2,8 @@ const path = require('path')
 
 const TerserPlugin = require('terser-webpack-plugin')
 
+const CollectDependenciesWebpackPlugin = require('./plugins/CollectDependenciesWebpackPlugin')
+
 function resolve (dir, file = '') {
   return path.resolve(__dirname, './', dir, file)
 }
@@ -36,6 +38,9 @@ module.exports = {
       }]
     }]
   },
+  plugins: [
+    new CollectDependenciesWebpackPlugin()
+  ],
   optimization: {
     // mode 设为 production 后，以下选项自动启动
     minimize: true,
