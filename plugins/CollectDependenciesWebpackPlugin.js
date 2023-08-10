@@ -25,7 +25,7 @@ module.exports = class CollectDependenciesWebpackPlugin {
       })
 
       normalModuleFactory.hooks.afterResolve.tap(PLUGIN_NAME, (resolveData) => {
-        console.log(resolveData)
+        // console.log(resolveData)
       })
     })
   }

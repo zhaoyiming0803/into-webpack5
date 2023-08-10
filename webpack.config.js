@@ -11,7 +11,7 @@ function resolve (dir, file = '') {
 
 module.exports = {
   mode: 'none',
-  entry: resolve('src', 'test.banner'),
+  entry: resolve('src', 'index.js'),
   output: {
     filename: "bundle.js",
     path: resolve('dist'),
@@ -43,6 +43,8 @@ module.exports = {
   ],
   optimization: {
     // mode 设为 production 后，以下选项自动启动
+    // https://webpack.js.org/guides/tree-shaking/#minify-the-output
+    // minimize 为 false 时，不会 shaking dead codes
     minimize: true,
     // exports are not generated for unused exports
     // webpack/lib/WebpackOptionsApply.js
