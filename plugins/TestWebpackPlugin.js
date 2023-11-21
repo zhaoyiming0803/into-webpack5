@@ -47,7 +47,7 @@ module.exports = class TestWebpackPlugin {
       compilation.hooks.finishModules.tap('TestWebpackPlugin', (modules) => {
         for (const module of modules.values()) {
           const chunkName = getResourceName(module.resource)
-          // 仅做测试，统一打包到 bundle 中
+          // 仅做测试，统一打包到 bundle 中，实际上没必要重复注册多个相同的 cacheGroup
           // 如果需要更精细的拆分，可以修改 name 为 ${chunkName}-bundle 之类的名称，单独生成一个 bundle，
           // 然后在下面的 processChunk 中按需 concat source
           splitChunksOptions.cacheGroups[chunkName] = {
@@ -55,6 +55,15 @@ module.exports = class TestWebpackPlugin {
             minChunks: 2,
             chunks: 'all'
           }
+          // SplitChunksPlugin 的 constructor 中有很多针对 options 的 normalize 操作
+          // SplitChunksPlugin 注册了 optimizeChunks 钩子，有判断 if (alreadyOptimized) return;
+          // 就算 new 多次，等到 call optimizeChunks 钩子的时候，拿到的也是最后最新的 options
+          // 并且不会重复 split chunk
+
+          // SplitChunksPlugin:
+          // 根据 splitChunkOptions 将符合条件的 module 放到对应的 chunk 中 - addModuleToChunksInfoMap
+
+          // Compilation -> addChunkInGroup
           splitChunksPlugin.options = new SplitChunksPlugin(splitChunksOptions).options
         }
       })
