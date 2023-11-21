@@ -8,7 +8,30 @@ module.exports = class TestWebpackPlugin {
   constructor () {}
 
   apply (compiler) {
-    applySplitChunksPlugin(compiler)
+    const optimization = compiler.options.optimization
+    optimization.runtimeChunk = {
+      name: () => {
+        return 'bundle'
+      }
+    }
+
+    const splitChunksOptions = Object.assign({}, {
+      defaultSizeTypes: ['javascript', 'unknown'],
+      chunks: 'all',
+      usedExports: optimization.usedExports === true,
+      minChunks: 2,
+      minSize: 3,
+      enforceSizeThreshold: Infinity,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 30,
+      automaticNameDelimiter: '-'
+    }, optimization.splitChunks)
+
+    delete optimization.splitChunks
+    
+    const splitChunksPlugin = new SplitChunksPlugin(splitChunksOptions)
+    
+    splitChunksPlugin.apply(compiler)
 
     compiler.hooks.normalModuleFactory.tap('TestWebpackPlugin', (normalModuleFactory) => {
       normalModuleFactory.hooks.beforeResolve.tap('TestWebpackPlugin', data => {
@@ -20,7 +43,22 @@ module.exports = class TestWebpackPlugin {
       })
     })
 
-    compiler.hooks.thisCompilation.tap('TestWebpackPlugin', (compilation) => {
+    compiler.hooks.thisCompilation.tap('TestWebpackPlugin', (compilation) => {  
+      compilation.hooks.finishModules.tap('TestWebpackPlugin', (modules) => {
+        for (const module of modules.values()) {
+          const chunkName = getResourceName(module.resource)
+          // 仅做测试，统一打包到 bundle 中
+          // 如果需要更精细的拆分，可以修改 name 为 ${chunkName}-bundle 之类的名称，单独生成一个 bundle，
+          // 然后在下面的 processChunk 中按需 concat source
+          splitChunksOptions.cacheGroups[chunkName] = {
+            name: 'bundle',
+            minChunks: 2,
+            chunks: 'all'
+          }
+          splitChunksPlugin.options = new SplitChunksPlugin(splitChunksOptions).options
+        }
+      })
+
       compilation.hooks.processAssets.tap({
         name: 'TestWebpackPlugin',
         stage: compilation.PROCESS_ASSETS_STAGE_ADDITIONS
@@ -29,10 +67,11 @@ module.exports = class TestWebpackPlugin {
         const entryChunks = []
 
         compilation.chunkGroups.forEach(chunkGroup => {
+          const lastIndex = chunkGroup.chunks.length - 1
           chunkGroup.chunks.forEach((chunk, index) => {
             if (index === 0) {
               runtimeChunk = chunk
-            } else {
+            } else if (index === lastIndex) {
               entryChunks.push(chunk)
             }
           })
@@ -102,34 +141,6 @@ module.exports = class TestWebpackPlugin {
   }
 }
 
-function applySplitChunksPlugin (compiler) {
-  const optimization = compiler.options.optimization
-
-  optimization.runtimeChunk = {
-    name: () => {
-      return 'bundle'
-    }
-  }
-
-  const splitChunksOptions = Object.assign({}, {
-    defaultSizeTypes: ['javascript', 'unknown'],
-    chunks: 'all',
-    usedExports: optimization.usedExports === true,
-    minChunks: 1,
-    minSize: 1,
-    enforceSizeThreshold: Infinity,
-    maxAsyncRequests: 30,
-    maxInitialRequests: 30,
-    automaticNameDelimiter: '-'
-  }, optimization.splitChunks)
-
-  delete optimization.splitChunks
-  
-  const splitChunksPlugin = new SplitChunksPlugin(splitChunksOptions)
-  
-  splitChunksPlugin.apply(compiler)
-}
-
 function getTargetFile (file) {
   let targetFile = file
   const queryStringIdx = targetFile.indexOf('?')
@@ -148,4 +159,10 @@ function fixRelativePath (path) {
 
 function toPosix (path) {
   return path.replace(/\\/g, '/')
+}
+
+function getResourceName (resource) {
+  const basename = path.basename(resource)
+  const index = basename.indexOf('.')
+  return basename.slice(0, index)
 }
