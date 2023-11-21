@@ -52,7 +52,7 @@ module.exports = class TestWebpackPlugin {
           // 然后在下面的 processChunk 中按需 concat source
           splitChunksOptions.cacheGroups[chunkName] = {
             name: 'bundle',
-            minChunks: 2,
+            minChunks: 3,
             chunks: 'all'
           }
           // SplitChunksPlugin 的 constructor 中有很多针对 options 的 normalize 操作
@@ -171,7 +171,6 @@ function toPosix (path) {
 }
 
 function getResourceName (resource) {
-  const basename = path.basename(resource)
-  const index = basename.indexOf('.')
-  return basename.slice(0, index)
+  const index = resource.indexOf('src/')
+  return resource.slice(index + 4)
 }

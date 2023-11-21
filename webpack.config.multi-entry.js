@@ -15,6 +15,9 @@ module.exports = {
     },
     b: {
       import: './src/b.js'
+    },
+    'c/c': {
+      import: './src/c/c.js'
     }
   },
   output: {
