@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && webpack --config ./webpack.config.js --watch"
+    "build:cache": "rm -rf dist && webpack --config ./webpack.cache.config.js",
+    "build:multi-entry": "rm -rf dist && webpack --config ./webpack.config.multi-entry.js",
+    "watch": "rm -rf dist && webpack --config ./webpack.config.js --watch",
+    "build": "rm -rf dist && webpack --config ./webpack.config.js"
   },
   "license": "ISC",
   "devDependencies": {

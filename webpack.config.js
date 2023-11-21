@@ -4,6 +4,8 @@ const TerserPlugin = require('terser-webpack-plugin')
 
 const CollectDependenciesWebpackPlugin = require('./plugins/CollectDependenciesWebpackPlugin')
 
+const TestWebpackPlugin = require('./plugins/TestWebpackPlugin')
+
 function resolve (dir, file = '') {
   return path.resolve(__dirname, './', dir, file)
 }
@@ -23,23 +25,24 @@ module.exports = {
   experiments: {
     outputModule: true
   },
-  resolveLoader: {
-    modules: ['node_modules', path.resolve(__dirname, 'loaders')]
-  },
-  module: {
-    rules: [{
-      test: /\.banner$/,
-      use: [{
-        loader: 'banner-loader',
-        options: {
-          author: 'sdf',
-          time: 'sdf'
-        }
-      }]
-    }]
-  },
+  // resolveLoader: {
+  //   modules: ['node_modules', path.resolve(__dirname, 'loaders')]
+  // },
+  // module: {
+  //   rules: [{
+  //     test: /\.banner$/,
+  //     use: [{
+  //       loader: 'banner-loader',
+  //       options: {
+  //         author: 'sdf',
+  //         time: 'sdf'
+  //       }
+  //     }]
+  //   }]
+  // },
   plugins: [
-    new CollectDependenciesWebpackPlugin()
+    // new CollectDependenciesWebpackPlugin()
+    new TestWebpackPlugin()
   ],
   optimization: {
     // mode 设为 production 后，以下选项自动启动
