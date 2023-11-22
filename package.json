@@ -6,6 +6,7 @@
   "scripts": {
     "build:cache": "rm -rf dist && webpack --config ./webpack.cache.config.js",
     "build:entry": "rm -rf dist && webpack --config ./webpack.config.entry.js",
+    "build:output": "rm -rf dist && webpack --config ./webpack.config.output.js",
     "watch": "rm -rf dist && webpack --config ./webpack.config.js --watch",
     "build": "rm -rf dist && webpack --config ./webpack.config.js"
   },
