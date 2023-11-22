@@ -1,6 +1,6 @@
 const path = require('path')
 
-const TestWebpackPlugin = require('./plugins/TestWebpackPlugin')
+const EntryChunkWebpackPlugin = require('./plugins/EntryChunkWebpackPlugin')
 
 function resolve (dir, file = '') {
   return path.resolve(__dirname, './', dir, file)
@@ -46,6 +46,6 @@ module.exports = {
     globalObject: 'global'
   },
   plugins: [
-    new TestWebpackPlugin()
+    new EntryChunkWebpackPlugin()
   ]
 }
