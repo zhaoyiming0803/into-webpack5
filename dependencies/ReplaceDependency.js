@@ -1,5 +1,5 @@
 /**
- * deprecated
+ * @deprecated
  */
 
 const NullDependency = require('webpack/lib/dependencies/NullDependency')
