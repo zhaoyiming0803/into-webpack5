@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:cache": "rm -rf dist && webpack --config ./webpack.cache.config.js",
-    "build:multi-entry": "rm -rf dist && webpack --config ./webpack.config.multi-entry.js",
+    "build:entry": "rm -rf dist && webpack --config ./webpack.config.entry.js",
     "watch": "rm -rf dist && webpack --config ./webpack.config.js --watch",
     "build": "rm -rf dist && webpack --config ./webpack.config.js"
   },
