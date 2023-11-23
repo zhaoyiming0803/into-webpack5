@@ -1,1 +1,19 @@
-console.log('this is test.banner file')
+class Person {
+  constructor (name, age) {
+    this.name = name
+    this.age = age
+  }
+
+  getName () {
+    return this.name
+  }
+}
+
+function createPerson (name, age) {
+  return new Person(name, age)
+}
+
+export {
+  Person,
+  createPerson
+}

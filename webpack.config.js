@@ -25,21 +25,6 @@ module.exports = {
   experiments: {
     outputModule: true
   },
-  // resolveLoader: {
-  //   modules: ['node_modules', path.resolve(__dirname, 'loaders')]
-  // },
-  // module: {
-  //   rules: [{
-  //     test: /\.banner$/,
-  //     use: [{
-  //       loader: 'banner-loader',
-  //       options: {
-  //         author: 'sdf',
-  //         time: 'sdf'
-  //       }
-  //     }]
-  //   }]
-  // },
   plugins: [
     // new CollectDependenciesWebpackPlugin()
     new TestWebpackPlugin()

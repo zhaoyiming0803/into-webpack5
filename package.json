@@ -7,12 +7,14 @@
     "build:cache": "rm -rf dist && webpack --config ./webpack.cache.config.js",
     "build:entry": "rm -rf dist && webpack --config ./webpack.config.entry.js",
     "build:output": "rm -rf dist && webpack --config ./webpack.config.output.js",
+    "build:loader": "rm -rf dist && webpack --config ./webpack.config.loader.js",
     "watch": "rm -rf dist && webpack --config ./webpack.config.js --watch",
     "build": "rm -rf dist && webpack --config ./webpack.config.js"
   },
   "license": "ISC",
   "devDependencies": {
     "acorn-walk": "^8.2.0",
+    "async": "^3.2.5",
     "chalk": "^2.3.2",
     "loader-utils": "^3.2.1",
     "rimraf": "^2.6.2",
