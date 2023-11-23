@@ -13,7 +13,13 @@ function createPerson (name, age) {
   return new Person(name, age)
 }
 
+const deps = [
+  './e1.js',
+  './e2.js'
+]
+
 export {
   Person,
-  createPerson
+  createPerson,
+  deps
 }

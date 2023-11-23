@@ -1,6 +1,10 @@
 const fs = require('fs')
 
+const path = require('path')
+
 const async = require('async')
+
+const EntryPlugin = require('webpack/lib/EntryPlugin')
 
 function bannerLoader3 (source) {
   const loaderAsyncCallback = this.async()
@@ -13,6 +17,18 @@ function bannerLoader3 (source) {
 
   async.waterfall([
     (callback) => {
+      if (this.data.content && Array.isArray(this.data.content.deps)) {
+        this.data.content.deps.forEach(depPath => {
+          const _path = path.resolve(this.context, depPath)
+          const dep = EntryPlugin.createDependency(depPath, { name: _path })
+          this._compilation.addEntry(
+            this.context, 
+            dep, 
+            path.basename(depPath, path.extname(depPath)), 
+            (error, entryModule) => {})
+        })
+      }
+
       const p1 = new this.data.content.Person('lisi', 1)
 
       const p2 = this.data.content.createPerson('wangwu', 2)
@@ -40,10 +56,17 @@ function bannerLoader3 (source) {
         if (!error) {
           this.emitFile('e1.copy.js', content)
         }
+        callback(error, result)
+      })
+    },
+    (result, callback) => {
+      this.loadModule(result, (error, source, sourceMap, module) => {
+        finalSource = `${finalSource} \n ${source} \n`
         callback(error)
       })
     }
   ], (error) => {
+    console.log(this)
     loaderAsyncCallback(error, finalSource)
   })
 }
