@@ -1,5 +1,7 @@
 const path = require('path')
 
+const EntryChunkWebpackPlugin = require('./plugins/EntryChunkWebpackPlugin')
+
 function resolve (dir, file = '') {
   return path.resolve(__dirname, './', dir, file)
 }
@@ -37,5 +39,9 @@ module.exports = {
         loader: 'banner-loader3'
       }]
     }]
-  }
+  },
+
+  plugins: [
+    new EntryChunkWebpackPlugin()
+  ]
 }

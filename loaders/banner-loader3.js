@@ -6,26 +6,30 @@ const async = require('async')
 
 const EntryPlugin = require('webpack/lib/EntryPlugin')
 
-function bannerLoader3 (source) {
+let cached = false
+
+function bannerLoader3 (source) {  
   const loaderAsyncCallback = this.async()
 
   const resolve = this.getResolve({})
-
-  this.addDependency(`${this.context}/e1.js`)
 
   let finalSource = source
 
   async.waterfall([
     (callback) => {
-      if (this.data.content && Array.isArray(this.data.content.deps)) {
+      if (!cached && this.data.content && Array.isArray(this.data.content.deps)) {
+        cached = true
         this.data.content.deps.forEach(depPath => {
+          this.addDependency(path.resolve(this.context, depPath))
           const _path = path.resolve(this.context, depPath)
-          const dep = EntryPlugin.createDependency(depPath, { name: _path })
+          const dep = EntryPlugin.createDependency(_path, { name: _path })
           this._compilation.addEntry(
             this.context, 
             dep, 
             path.basename(depPath, path.extname(depPath)), 
-            (error, entryModule) => {})
+            (error, entryModule) => {
+              
+            })
         })
       }
 
@@ -66,7 +70,7 @@ function bannerLoader3 (source) {
       })
     }
   ], (error) => {
-    console.log(this)
+    finalSource = `${finalSource} \n environment: ${JSON.stringify(this.environment)} \n`
     loaderAsyncCallback(error, finalSource)
   })
 }
@@ -75,9 +79,10 @@ bannerLoader3.pitch = async function pitch (remainingRequest, previousRequest, d
   // remainingRequest
   // '/Users/zhaoyiming/Desktop/github/into-webpack5/src/test.banner'
 
-  const path = this.resourcePath + '.webpack[javascript/auto]' + '!=!' + remainingRequest
+  const path1 = this.resourcePath + '.webpack[javascript/auto]' + '!=!' + remainingRequest
+  const path2 = '!!' + this.remainingRequest
   const result = await this.importModule(
-    path,
+    path1,
     this.getOptions()
   )
   

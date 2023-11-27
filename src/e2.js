@@ -1,1 +1,1 @@
-console.log('hello e2.js!!')
+console.log('hello e2.js!')

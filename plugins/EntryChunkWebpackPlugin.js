@@ -46,6 +46,9 @@ module.exports = class TestWebpackPlugin {
     compiler.hooks.thisCompilation.tap('TestWebpackPlugin', (compilation) => {  
       compilation.hooks.finishModules.tap('TestWebpackPlugin', (modules) => {
         for (const module of modules.values()) {
+          if (!module.resource) {
+            continue
+          }
           const chunkName = getResourceName(module.resource)
           // 仅做测试，统一打包到 bundle 中，实际上没必要重复注册多个相同的 cacheGroup
           // 如果需要更精细的拆分，可以修改 name 为 ${chunkName}-bundle 之类的名称，单独生成一个 bundle，
