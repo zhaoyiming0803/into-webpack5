@@ -53,10 +53,24 @@ module.exports = class TestWebpackPlugin {
           // 仅做测试，统一打包到 bundle 中，实际上没必要重复注册多个相同的 cacheGroup
           // 如果需要更精细的拆分，可以修改 name 为 ${chunkName}-bundle 之类的名称，单独生成一个 bundle，
           // 然后在下面的 processChunk 中按需 concat source
-          splitChunksOptions.cacheGroups[chunkName] = {
-            name: 'bundle',
-            minChunks: 2,
-            chunks: 'all'
+          if (['common1.js'].includes(chunkName)) {
+            splitChunksOptions.cacheGroups[chunkName] = {
+              test (module) {
+                return module.resource.indexOf('common1.js') > -1
+              },
+              name: chunkName + '-bundle',
+              minChunks: 2,
+              chunks: 'all'
+            }
+          } else if (['common2.js'].includes(chunkName)) {
+            splitChunksOptions.cacheGroups[chunkName] = {
+              test (module) {
+                return module.resource.indexOf('common2.js') > -1
+              },
+              name: path.basename(chunkName) + '-bundle',
+              minChunks: 3,
+              chunks: 'all'
+            }
           }
           // SplitChunksPlugin 的 constructor 中有很多针对 options 的 normalize 操作
           // SplitChunksPlugin 注册了 optimizeChunks 钩子，有判断 if (alreadyOptimized) return;
@@ -75,20 +89,6 @@ module.exports = class TestWebpackPlugin {
         name: 'TestWebpackPlugin',
         stage: compilation.PROCESS_ASSETS_STAGE_ADDITIONS
       }, () => {
-        let runtimeChunk = null
-        const entryChunks = []
-
-        compilation.chunkGroups.forEach(chunkGroup => {
-          const lastIndex = chunkGroup.chunks.length - 1
-          chunkGroup.chunks.forEach((chunk, index) => {
-            if (index === 0) {
-              runtimeChunk = chunk
-            } else if (index === lastIndex) {
-              entryChunks.push(chunk)
-            }
-          })
-        })
-
         const {
           globalObject,
           chunkLoadingGlobal
@@ -139,15 +139,37 @@ module.exports = class TestWebpackPlugin {
           processedChunk.add(chunk)
         }
 
-        if (runtimeChunk) {
-          processChunk(runtimeChunk, true, [])
-          
-          if (entryChunks.length) {
-            entryChunks.forEach(chunk => {
-              processChunk(chunk, false, [runtimeChunk])
-            })
-          }
-        }
+        compilation.chunkGroups.forEach(chunkGroup => {
+          let runtimeChunk = null
+          let entryChunk = null
+          const middleChunks = []
+          const lastIndex = chunkGroup.chunks.length - 1
+  
+          chunkGroup.chunks.forEach((chunk, index) => {
+            if (index === 0) {
+              runtimeChunk = chunk
+            } else if (index === lastIndex) {
+              entryChunk = chunk
+            } else {
+              middleChunks.push(chunk)
+            }
+
+            if (runtimeChunk) {
+              processChunk(runtimeChunk, true, [])
+              
+              if (middleChunks.length) {
+                middleChunks.forEach(chunk => {
+                  processChunk(chunk, false, [runtimeChunk])
+                })
+              }
+
+              if (entryChunk) {
+                middleChunks.unshift(runtimeChunk)
+                processChunk(entryChunk, false, middleChunks)
+              }
+            }
+          })
+        })
       })
     })
   }
