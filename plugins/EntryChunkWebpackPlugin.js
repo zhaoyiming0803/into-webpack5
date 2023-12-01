@@ -53,7 +53,7 @@ module.exports = class TestWebpackPlugin {
           // 仅做测试，统一打包到 bundle 中，实际上没必要重复注册多个相同的 cacheGroup
           // 如果需要更精细的拆分，可以修改 name 为 ${chunkName}-bundle 之类的名称，单独生成一个 bundle，
           // 然后在下面的 processChunk 中按需 concat source
-          if (['common1.js'].includes(chunkName)) {
+          if (chunkName === 'common1.js') {
             splitChunksOptions.cacheGroups[chunkName] = {
               test (module) {
                 return module.resource.indexOf('common1.js') > -1
@@ -62,13 +62,22 @@ module.exports = class TestWebpackPlugin {
               minChunks: 2,
               chunks: 'all'
             }
-          } else if (['common2.js'].includes(chunkName)) {
+          } else if (chunkName === 'common2.js') {
             splitChunksOptions.cacheGroups[chunkName] = {
               test (module) {
                 return module.resource.indexOf('common2.js') > -1
               },
               name: path.basename(chunkName) + '-bundle',
               minChunks: 3,
+              chunks: 'all'
+            }
+          } else if (chunkName === 'common3.js') {
+            splitChunksOptions.cacheGroups[chunkName] = {
+              test (module) {
+                return module.resource.indexOf('common3.js') > -1
+              },
+              name: path.basename(chunkName) + '-bundle',
+              minChunks: 1,
               chunks: 'all'
             }
           }

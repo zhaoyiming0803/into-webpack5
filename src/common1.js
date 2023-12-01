@@ -1,3 +1,5 @@
+export * from './common3'
+
 export const common = 'common.js'
 
 const node = {
@@ -120,61 +122,72 @@ const text = `
     ## 2-3
 `
 
-function parseMarkdown (text) {
+export function parseMarkdown (text) {
+  const arr = text
+    .split('\n')
+    .map(item => item.replace(/\s/g, ''))
+    .filter(item => item)
+    .map(item => {
+      if (item[0] === '#') {
+        let level = 0
+        let content = ''
+        for (let i = 0; i < item.length; i++) {
+          if (item[i] === '#') {
+            level += 1
+          } else {
+            content += item[i]
+          }
+        }
+        return {
+          type: 'header',
+          level,
+          content,
+          rawContent: item,
+          children: [],
+          parent: null
+        }
+      }
+
+      return {
+        type: 'content',
+        content: item,
+        rawContent: item,
+        parent: null,
+        children: null
+      }
+    })
+
   const data = {
     level: 0,
     children: [],
     parent: null
   }
 
-  const arr = text
-    .split('\n')
-    .filter(item => item)
-    .map(item => item.replace(/^(\s+)/, ''))
-    .map(item => {
-      const match = item.match(/^(#+)\s?(.+)/)
-      if (match) {
-        return {
-          level: match[1].length,
-          content: match[2],
-          rawContent: item,
-          children: []
-        }
-      } else {
-        return {
-          content: item,
-          rawContent: item
-        }
-      }
-    })
-
-  console.log(arr)
-
-  let prevLevel = data.level
-  let prevItem = data
+  let preItem = data
 
   arr.forEach(item => {
-    if (item.level === undefined && !Array.isArray(item.children)) {
-      prevItem.children.push(item)
-      item.parent = prevItem
+
+    if (item.type === 'content') {
+      preItem.children.push(item)
+      item.parent = preItem
       return
     }
 
-    if (item.level > prevLevel) {
-      prevItem.children.push(item)
-      item.parent = prevItem
-      prevLevel = item.level
-      prevItem = item
+    if (item.level > preItem.level) {
+      preItem.children.push(item)
+      item.parent = preItem
+      preItem = item
       return
     }
 
-    while (prevItem.level >= item.level) {
-      prevItem = prevItem.parent
+    while (item.level <= preItem.level) {
+      preItem = preItem.parent
     }
 
-    prevItem.children.push(item)
-    prevItem = item
-    prevLevel = item.level
+    preItem.children.push(item)
+    item.parent = preItem
+    preItem = item
+
   })
 
   return data
@@ -182,19 +195,24 @@ function parseMarkdown (text) {
 
 export const tree = parseMarkdown(text)
 
-function flatTree(tree) {
-  let res = []
+export function flatTree (tree) {
 
-  tree.forEach((item) => {
-    if (item.content) {
-      res.push(item.rawContent)
-    }
-    if (Array.isArray(item.children) && item.children.length) {
-      res = res.concat(flatTree(item.children))
-    }
-  })
+  const walkChildren = (arr) => {
+    let res = []
 
-  return res
+    arr.forEach(item => {
+      res.push(item)
+
+      if (Array.isArray(item.children)) {
+        res = res.concat(walkChildren(item.children))
+      }
+    })
+
+    return res
+  }
+
+  return walkChildren(tree.children)
+
 }
 
-export const flatedTree = flatTree(tree.children)
+export const flatedTree = flatTree(tree)
